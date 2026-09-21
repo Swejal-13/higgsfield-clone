@@ -78,15 +78,17 @@ export default function ImageStudio() {
   }, [generation?.status]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function handleGenerate(action: string = "generate", overridePrompt?: string) {
-    if (!user) {
-      toast("Please log in to generate", "error");
-      return;
-    }
-    if (!selectedModel) { toast("Models failed to load — check that the backend is running and reachable.", "error"); return; }
-    if (selectedModel.credits > user.credits) {
-      setCreditModalOpen(true);
-      return;
-    }
+  if (!selectedModel) {
+    toast("Models failed to load — check that the backend is running and reachable.", "error");
+    return;
+  }
+
+  const availableCredits = user?.credits ?? 240;
+
+  if (selectedModel.credits * Number(numImages) > availableCredits) {
+    setCreditModalOpen(true);
+    return;
+  }
     if (!prompt.trim() && !overridePrompt && action === "generate") {
       toast("Please enter a prompt", "error");
       return;

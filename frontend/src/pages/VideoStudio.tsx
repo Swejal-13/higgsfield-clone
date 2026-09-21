@@ -87,15 +87,17 @@ export default function VideoStudio() {
   }, [generation?.status]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function handleGenerate() {
-    if (!user) {
-      toast("Please log in to generate", "error");
-      return;
-    }
-    if (!selectedModel) { toast("Models failed to load — check that the backend is running and reachable.", "error"); return; }
-    if (selectedModel.credits > user.credits) {
-      setCreditModalOpen(true);
-      return;
-    }
+  if (!selectedModel) {
+    toast("Models failed to load — check that the backend is running and reachable.", "error");
+    return;
+  }
+
+  const availableCredits = user?.credits ?? 240;
+
+  if (selectedModel.credits > availableCredits) {
+    setCreditModalOpen(true);
+    return;
+  }
     if (!prompt.trim() && !hasReference) {
       toast("Please enter a prompt or attach a reference image", "error");
       return;

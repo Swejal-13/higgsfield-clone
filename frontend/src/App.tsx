@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { MainLayout } from "@/layouts/MainLayout";
 import { AppLayout } from "@/layouts/AppLayout";
-import { ProtectedRoute } from "@/components/ProtectedRoute";
+
 
 import Landing from "@/pages/Landing";
 import Explore from "@/pages/Explore";
@@ -36,6 +36,7 @@ import Projects from "@/pages/Projects";
 import ProjectDetail from "@/pages/ProjectDetail";
 import Settings from "@/pages/Settings";
 import Admin from "@/pages/Admin";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 
 export default function App() {
   return (
@@ -53,7 +54,7 @@ export default function App() {
         <Route path="/share/:id" element={<Share />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
 
-        {/* Public-accessible creative surfaces (usable signed-out; generating requires login) */}
+        {/* Public-accessible creative surfaces */}
         <Route path="/image" element={<ImageStudio />} />
         <Route path="/image/edit" element={<ImageEdit />} />
         <Route path="/video" element={<VideoStudio />} />
@@ -70,17 +71,25 @@ export default function App() {
         <Route path="/contests" element={<Contests />} />
       </Route>
 
-      {/* Authenticated workspace */}
-      <Route element={<AppLayout />}>
-        <Route path="/app" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-        <Route path="/canvas" element={<ProtectedRoute><Canvas /></ProtectedRoute>} />
-        <Route path="/assets" element={<ProtectedRoute><Assets /></ProtectedRoute>} />
-        <Route path="/history" element={<ProtectedRoute><HistoryPage /></ProtectedRoute>} />
-        <Route path="/projects" element={<ProtectedRoute><Projects /></ProtectedRoute>} />
-        <Route path="/projects/:id" element={<ProtectedRoute><ProjectDetail /></ProtectedRoute>} />
-        <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-        <Route path="/admin" element={<ProtectedRoute adminOnly><Admin /></ProtectedRoute>} />
-      </Route>
+      {/* Public workspace */}
+<Route element={<AppLayout />}>
+  <Route path="/app" element={<Dashboard />} />
+  <Route path="/canvas" element={<Canvas />} />
+  <Route path="/assets" element={<Assets />} />
+  <Route path="/history" element={<HistoryPage />} />
+  <Route path="/projects" element={<Projects />} />
+  <Route path="/projects/:id" element={<ProjectDetail />} />
+  <Route path="/settings" element={<Settings />} />
+
+  <Route
+    path="/admin"
+    element={
+      <ProtectedRoute adminOnly>
+        <Admin />
+      </ProtectedRoute>
+    }
+  />
+</Route>
 
       <Route path="*" element={<MainLayout />}>
         <Route path="*" element={<NotFound />} />

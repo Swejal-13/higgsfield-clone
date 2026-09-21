@@ -1,9 +1,13 @@
 import { Router } from "express";
 import { generateAudio } from "../controllers/audio.controller";
-import { requireAuth } from "../middleware/auth";
+import { optionalDemoAuth } from "../middleware/demoAuth";
 import { generationRateLimiter } from "../middleware/rateLimit";
 
 const router = Router();
-router.post("/generate", requireAuth, generationRateLimiter, generateAudio);
-
+router.post(
+  "/generate",
+  optionalDemoAuth,
+  generationRateLimiter,
+  generateAudio
+);
 export default router;

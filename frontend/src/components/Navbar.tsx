@@ -164,10 +164,11 @@ export function Navbar() {
                 </AnimatePresence>
               </div>
             </div>
-          ) : (
+                    ) : (
             <div className="flex items-center gap-2 ml-2">
-              <Link to="/login" className="btn-secondary !py-2 !px-4 text-sm">Log in</Link>
-              <Link to="/signup" className="btn-primary !py-2 !px-4 text-sm">Sign up</Link>
+              <Link to="/image" className="btn-primary !py-2 !px-4 text-sm">
+                Try for free
+              </Link>
             </div>
           )}
 
