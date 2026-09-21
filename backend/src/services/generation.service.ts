@@ -52,12 +52,11 @@ export async function startGeneration(params: StartGenerationParams): Promise<IG
     creditsUsed: creditsCost,
   });
 
-  // Fire-and-forget async pipeline; frontend polls generation status.
-  runPipeline(generation.id, creditsCost).catch(async (err) => {
-    console.error("[generation] pipeline error", err);
-  });
+  // Run the pipeline within the serverless request so Vercel keeps the function alive until generation completes.
+  await runPipeline(generation.id, creditsCost);
 
-  return generation;
+  const completedGeneration = await Generation.findById(generation.id);
+  return completedGeneration || generation;
 }
 
 async function runPipeline(generationId: string, creditsCost: number) {
@@ -184,3 +183,5 @@ export async function cancelGeneration(generationId: string, userId: string) {
   await generation.save();
   return generation;
 }
+
+
