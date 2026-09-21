@@ -4,7 +4,7 @@ A full-stack educational recreation of the Higgsfield AI creative platform, buil
 
 ## Live Demo
 
-**Live URL:** _Add deployed URL here_
+**Live URL:** [frontend-khlutp67c-swejal-s-projects1.vercel.app](https://frontend-eight-plum-uliqqflh7j.vercel.app/)
 
 The application is designed to work without external AI API keys by using local mock generation providers. This allows the core image, video, audio, editing, effects, and workflow experiences to be demonstrated end-to-end.
 
