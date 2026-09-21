@@ -1,0 +1,18 @@
+node_modules/
+dist/
+build/
+.env
+*.log
+backend/public/uploads/*
+!backend/public/uploads/.gitkeep
+.DS_Store
+
+# 8x assignment: agent session history must be committed
+!.agent-logs/
+!.agent-logs/**
+
+# Temporary 8x capture state
+.agent-logs/.capture-state/
+
+# Local Codex configuration/hooks
+.codex/
