@@ -8,7 +8,6 @@
 // It exists so a demo never hard-fails just because Gemini is down, out of
 // quota, or unreachable: ExternalImageProvider calls buildFallbackOutputs()
 // whenever the real API call throws.
-import { randomUUID } from "crypto";
 import { GenerationOutput } from "../ProviderTypes";
 
 //const PUBLIC_DIR = path.join(__dirname, "..", "..", "..", "public");
