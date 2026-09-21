@@ -2,15 +2,15 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://backend-dtr8lnynk-swejal-s-projects1.vercel.app/api/:path*"
+      "destination": "https://backend-sage-eight-49.vercel.app/api/:path*"
     },
     {
       "source": "/demo/:path*",
-      "destination": "https://backend-dtr8lnynk-swejal-s-projects1.vercel.app/demo/:path*"
+      "destination": "https://backend-sage-eight-49.vercel.app/demo/:path*"
     },
     {
       "source": "/uploads/:path*",
-      "destination": "https://backend-dtr8lnynk-swejal-s-projects1.vercel.app/uploads/:path*"
+      "destination": "https://backend-sage-eight-49.vercel.app/uploads/:path*"
     },
     {
       "source": "/(.*)",
