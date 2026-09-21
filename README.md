@@ -1,8 +1,6 @@
-# Higgsfield (Educational Clone)
+# Higgsfield Clone - 8x Assignment
 
-A full-stack educational recreation of the Higgsfield AI creative platform, built as a college assignment.
-
-> **Disclaimer:** This project is not affiliated with, endorsed by, or produced by Higgsfield AI. Higgsfield branding, model names, and effect names are referenced only for educational recreation purposes as required by the assignment.
+A full-stack educational recreation of the Higgsfield AI creative platform, built as a 8x assignment.
 
 ## Live Demo
 
