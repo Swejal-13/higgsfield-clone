@@ -34,14 +34,19 @@ export const uploadAsset = asyncHandler(async (req: AuthedRequest, res: Response
     ? "video"
     : "audio";
 
+  const dataUrl = `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
+
   const asset = await Asset.create({
     userId: req.user!.userId,
     type,
-    url: `/uploads/${file.filename}`,
-    thumbnailUrl: type === "image" ? `/uploads/${file.filename}` : undefined,
+    url: dataUrl,
+    thumbnailUrl: type === "image" ? dataUrl : undefined,
     filename: file.originalname,
     size: file.size,
-    metadata: { uploaded: true },
+    metadata: {
+      uploaded: true,
+      mimetype: file.mimetype,
+    },
   });
 
   res.status(201).json({ success: true, data: { asset } });
