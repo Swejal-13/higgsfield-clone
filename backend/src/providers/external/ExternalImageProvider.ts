@@ -5,7 +5,7 @@
 // so the rest of the app never needs to change.
 import fs from "fs";
 import path from "path";
-import { randomUUID } from "crypto";
+//import { randomUUID } from "crypto";
 import { ImageGenerationProvider, BaseGenerationInput, GenerationResult, GenerationOutput } from "../ProviderTypes";
 import { ApiError } from "../../utils/ApiError";
 import { env } from "../../config/env";
@@ -17,8 +17,8 @@ const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models
 // Generated images are written here, next to user uploads, and served
 // statically by app.ts under /uploads.
 const PUBLIC_DIR = path.join(__dirname, "..", "..", "..", "public");
-const OUTPUT_DIR = path.join(PUBLIC_DIR, "uploads");
-if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+//const OUTPUT_DIR = path.join(PUBLIC_DIR, "uploads");
+//if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
 interface GeminiPart {
   text?: string;
@@ -112,18 +112,21 @@ async function callGemini(parts: GeminiPart[]): Promise<GenerationOutput[]> {
   }
 
   return imageParts.map((p) => {
-    const ext = p.inlineData.mimeType === "image/jpeg" ? "jpg" : "png";
-    const filename = `${randomUUID()}.${ext}`;
-    fs.writeFileSync(path.join(OUTPUT_DIR, filename), Buffer.from(p.inlineData.data, "base64"));
-    return {
-      url: `/uploads/${filename}`,
-      thumbnailUrl: `/uploads/${filename}`,
-      type: "image" as const,
-      metadata: { generatedAt: new Date().toISOString(), provider: "gemini", model: GEMINI_MODEL },
-    };
-  });
-}
+  const mimeType = p.inlineData.mimeType || "image/png";
+  const dataUrl = `data:${mimeType};base64,${p.inlineData.data}`;
 
+  return {
+    url: dataUrl,
+    thumbnailUrl: dataUrl,
+    type: "image" as const,
+    metadata: {
+      generatedAt: new Date().toISOString(),
+      provider: "gemini",
+      model: GEMINI_MODEL,
+    },
+  };
+});
+}
 // Runs the real Gemini call(s) and, if ANY of them throw (missing/invalid key,
 // network error, quota exceeded, safety block, etc.), falls back to the local
 // keyword-based SVG generator instead of failing the generation outright.
