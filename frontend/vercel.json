@@ -10,7 +10,11 @@
     },
     {
       "source": "/uploads/:path*",
-      "destination": "https://backend-2s2rqyumc-swejal-s-projects1.vercel.app/uploads/:path*"
+      "destination": "https://backend-2s2rqyumc-s-projects1.vercel.app/uploads/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
