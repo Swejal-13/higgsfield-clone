@@ -8,14 +8,12 @@
 // It exists so a demo never hard-fails just because Gemini is down, out of
 // quota, or unreachable: ExternalImageProvider calls buildFallbackOutputs()
 // whenever the real API call throws.
-import fs from "fs";
-import path from "path";
 import { randomUUID } from "crypto";
 import { GenerationOutput } from "../ProviderTypes";
 
-const PUBLIC_DIR = path.join(__dirname, "..", "..", "..", "public");
-const OUTPUT_DIR = path.join(PUBLIC_DIR, "uploads");
-if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+//const PUBLIC_DIR = path.join(__dirname, "..", "..", "..", "public");
+//const OUTPUT_DIR = path.join(PUBLIC_DIR, "uploads");
+//if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
 interface Theme {
   keywords: string[];
@@ -367,16 +365,20 @@ function truncate(s: string, n: number): string {
 // Renders `count` local SVG illustrations for the given prompt and writes
 // them to the same /uploads directory the real provider uses, so the rest
 // of the app (asset storage, history, viewer) treats them identically.
-export function buildFallbackOutputs(prompt: string, count: number): GenerationOutput[] {
+export function buildFallbackOutputs(
+  prompt: string,
+  count: number
+): GenerationOutput[] {
   const n = Math.max(1, Math.min(count, 4));
   const outputs: GenerationOutput[] = [];
+
   for (let i = 0; i < n; i++) {
     const svg = renderOne(prompt || "", i);
-    const filename = `${randomUUID()}.svg`;
-    fs.writeFileSync(path.join(OUTPUT_DIR, filename), svg, "utf-8");
+    const dataUrl = `data:image/svg+xml;base64,${Buffer.from(svg, "utf-8").toString("base64")}`;
+
     outputs.push({
-      url: `/uploads/${filename}`,
-      thumbnailUrl: `/uploads/${filename}`,
+      url: dataUrl,
+      thumbnailUrl: dataUrl,
       type: "image",
       metadata: {
         generatedAt: new Date().toISOString(),
@@ -385,5 +387,6 @@ export function buildFallbackOutputs(prompt: string, count: number): GenerationO
       },
     });
   }
+
   return outputs;
 }
