@@ -22,6 +22,9 @@ import adminRoutes from "./routes/admin.routes";
 
 const app: Application = express();
 
+app.set("trust proxy", 1);
+
+
 app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(cors({ origin: env.clientUrl, credentials: true }));
 app.use(express.json({ limit: "5mb" }));
