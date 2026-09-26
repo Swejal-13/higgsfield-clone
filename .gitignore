@@ -17,3 +17,4 @@ backend/public/uploads/*
 # Local Codex configuration/hooks
 .codex/
 *.tsbuildinfo*.tsbuildinfo*
+frontend/tsconfig.tsbuildinfo
