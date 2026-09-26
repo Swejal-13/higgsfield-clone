@@ -1,6 +1,6 @@
 # Higgsfield Clone - 8x Assignment
 
-A full-stack educational recreation of the Higgsfield AI creative platform, built as a 8x assignment.
+A full-stack educational recreation of the Higgsfield AI as Forge a creative platform, built as a 8x assignment.
 
 ## Live Demo
 
@@ -62,31 +62,9 @@ The application is a functional full-stack product rather than a static UI mocku
   - Scrubber
   - Editing controls
 
-- **Motion Control** (`/video/motion`)
-  - Character image upload
-  - Motion reference video upload
-
-- **Audio Studio** (`/audio`)
-  - TTS
-  - Voice
-  - SFX
-  - Music
-  - HTML5 audio playback
-
 - **Effects** (`/effects`)
   - Effect gallery
   - Preset handoff into image/video workflows
-
-- **Genjutsu** (`/genjutsu`)
-  - Video-to-video restyling workflow
-
-- **Cinema Studio** (`/cinema`)
-  - Scene
-  - Character
-  - Environment
-  - Camera
-  - Lens
-  - Lighting controls
 
 - **Canvas** (`/canvas`)
   - Node-based workflow builder using React Flow
