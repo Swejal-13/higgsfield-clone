@@ -56,7 +56,7 @@ export default function Explore() {
                   <p className="text-sm text-white/70 mt-1 max-w-sm">{p.description}</p>
                   <div className="flex items-center justify-between mt-3">
                     <span className="text-xs text-white/60">by {p.creator}</span>
-                    <Link to="/explore" className="text-xs font-semibold bg-accent text-black rounded-full px-3 py-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Link to="/explore" className="text-xs font-semibold bg-accent text-white rounded-full px-3 py-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
                       View project
                     </Link>
                   </div>
@@ -122,7 +122,7 @@ export default function Explore() {
         <section className="text-center py-10">
           <h3 className="text-xl font-bold">Explore the community</h3>
           <p className="text-sm text-ink-muted mt-2 max-w-md mx-auto">
-            Thousands of creators are pushing Higgsfield's models every day. Dive in for inspiration.
+            Thousands of creators are pushing Forge's models every day. Dive in for inspiration.
           </p>
           <Link to="/contests" className="btn-secondary inline-flex items-center gap-2 mt-5">
             See contests <ArrowRight size={14} />

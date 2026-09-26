@@ -102,7 +102,7 @@ export default function VideoEdit() {
               key={t}
               onClick={() => setTool(t)}
               className={`text-[11px] font-medium rounded-lg px-2 py-2 border transition-colors ${
-                tool === t ? "bg-accent text-black border-accent" : "bg-panel text-ink-muted border-border hover:text-ink"
+                tool === t ? "bg-accent text-white border-accent" : "bg-panel text-ink-muted border-border hover:text-ink"
               }`}
             >
               {t}
@@ -136,7 +136,7 @@ export default function VideoEdit() {
               onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
             />
             <div className="p-3 flex items-center gap-3">
-              <button onClick={togglePlay} className="w-8 h-8 rounded-full bg-accent text-black flex items-center justify-center shrink-0">
+              <button onClick={togglePlay} className="w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center shrink-0">
                 {playing ? <Pause size={14} /> : <Play size={14} />}
               </button>
               <input

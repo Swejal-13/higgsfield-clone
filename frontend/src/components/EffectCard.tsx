@@ -21,7 +21,7 @@ export function EffectCard({ effect }: { effect: Effect }) {
         <p className="text-sm font-semibold text-white mt-0.5">{effect.name}</p>
         <button
           onClick={(e) => { e.stopPropagation(); handleTry(); }}
-          className="mt-2 self-start flex items-center gap-1.5 bg-accent text-black text-xs font-semibold rounded-full px-3 py-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
+          className="mt-2 self-start flex items-center gap-1.5 bg-accent text-white text-xs font-semibold rounded-full px-3 py-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
         >
           <Play size={11} fill="currentColor" /> Try
         </button>

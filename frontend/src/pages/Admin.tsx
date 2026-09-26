@@ -26,7 +26,7 @@ export default function Admin() {
 
       <div className="flex gap-2 mb-6 overflow-x-auto">
         {TABS.map((t) => (
-          <button key={t} onClick={() => setTab(t)} className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium border transition-colors ${tab === t ? "bg-accent text-black border-accent" : "bg-panel text-ink-muted border-border hover:text-ink"}`}>
+          <button key={t} onClick={() => setTab(t)} className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium border transition-colors ${tab === t ? "bg-accent text-white border-accent" : "bg-panel text-ink-muted border-border hover:text-ink"}`}>
             {t}
           </button>
         ))}

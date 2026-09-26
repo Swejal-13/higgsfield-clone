@@ -21,7 +21,7 @@ export default function Genjutsu() {
   const { user, refreshUser } = useAuth();
   const { toast } = useToast();
   const { data: models = [] } = useQuery({ queryKey: ["genjutsu-models"], queryFn: () => fetchModels("video") });
-  const model = models.find((m) => m.id === "higgsfield-genjutsu") || models[0];
+  const model = models.find((m) => m.id === "forge-genjutsu") || models[0];
 
   const [sourceUrl, setSourceUrl] = useState<string>();
   const [sourceId, setSourceId] = useState<string>();
@@ -97,7 +97,7 @@ export default function Genjutsu() {
                   key={s}
                   onClick={() => setStyle(s)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
-                    style === s ? "bg-accent text-black border-accent" : "bg-panel text-ink-muted border-border hover:text-ink"
+                    style === s ? "bg-accent text-white border-accent" : "bg-panel text-ink-muted border-border hover:text-ink"
                   }`}
                 >
                   {s}

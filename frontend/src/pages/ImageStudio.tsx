@@ -19,6 +19,8 @@ import { ImageViewer } from "@/components/ImageViewer";
 import { InsufficientCreditsModal } from "@/components/InsufficientCreditsModal";
 import { EmptyState } from "@/components/EmptyState";
 import { Asset } from "@/types";
+import { usePreferences } from "@/contexts/PreferencesContext";
+import { addRecentPrompt } from "@/utils/preferences";
 
 const ASPECT_RATIOS = ["1:1", "16:9", "9:16", "4:3", "3:4", "21:9"] as const;
 const RESOLUTIONS = ["1K", "2K", "4K"] as const;
@@ -29,16 +31,22 @@ export default function ImageStudio() {
   const [params] = useSearchParams();
   const { user, refreshUser } = useAuth();
   const { toast } = useToast();
+  const { preferences } = usePreferences();
 
   const { data: models = [], isError: modelsErrored } = useQuery({ queryKey: ["image-models"], queryFn: () => fetchModels("image") });
   const { data: effects = [] } = useQuery({ queryKey: ["all-effects-img"], queryFn: () => fetchEffects() });
 
   const [prompt, setPrompt] = useState("");
   const [negativePrompt, setNegativePrompt] = useState("");
-  const [modelId, setModelId] = useState(params.get("model") || "higgsfield-soul-2");
-  const [aspectRatio, setAspectRatio] = useState<(typeof ASPECT_RATIOS)[number]>("1:1");
+  const [modelId, setModelId] = useState(params.get("model") || "forge-soul-2");
+  // Seeded from Settings > Generation defaults; still fully user-editable per generation.
+  const [aspectRatio, setAspectRatio] = useState<(typeof ASPECT_RATIOS)[number]>(
+    () => (ASPECT_RATIOS as readonly string[]).includes(preferences.defaultAspectRatio) ? (preferences.defaultAspectRatio as (typeof ASPECT_RATIOS)[number]) : "1:1"
+  );
   const [resolution, setResolution] = useState<(typeof RESOLUTIONS)[number]>("1K");
-  const [quality, setQuality] = useState<(typeof QUALITIES)[number]>("Standard");
+  const [quality, setQuality] = useState<(typeof QUALITIES)[number]>(
+    () => (QUALITIES as readonly string[]).includes(preferences.defaultQuality) ? (preferences.defaultQuality as (typeof QUALITIES)[number]) : "Standard"
+  );
   const [numImages, setNumImages] = useState<(typeof COUNTS)[number]>("1");
   const [referenceUrl, setReferenceUrl] = useState<string | undefined>();
   const [referenceAssetId, setReferenceAssetId] = useState<string | undefined>();
@@ -96,6 +104,7 @@ export default function ImageStudio() {
 
     setSubmitting(true);
     try {
+      addRecentPrompt(overridePrompt ?? prompt);
       const gen = await createGeneration({
         type: "image",
         action,

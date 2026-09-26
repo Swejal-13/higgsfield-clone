@@ -96,7 +96,7 @@ export default function AudioStudio() {
             key={m.id}
             onClick={() => setMode(m.id)}
             className={`flex flex-col items-center gap-1.5 rounded-xl border px-3 py-3 transition-colors ${
-              mode === m.id ? "bg-accent text-black border-accent" : "bg-panel border-border text-ink-muted hover:text-ink"
+              mode === m.id ? "bg-accent text-white border-accent" : "bg-panel border-border text-ink-muted hover:text-ink"
             }`}
           >
             <m.icon size={16} />

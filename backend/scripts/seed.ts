@@ -34,7 +34,7 @@ async function run() {
 
   const admin = await User.create({
     name: "Ava Admin",
-    email: "admin@higgsfield.demo",
+    email: "admin@forge.demo",
     passwordHash: demoPasswordHash,
     credits: 999,
     plan: "enterprise",
@@ -43,7 +43,7 @@ async function run() {
 
   const demoUser = await User.create({
     name: "Jordan Creator",
-    email: "demo@higgsfield.demo",
+    email: "demo@forge.demo",
     passwordHash: demoPasswordHash,
     credits: 240,
     plan: "pro",
@@ -94,14 +94,14 @@ async function run() {
   }
 
   await Notification.create([
-    { userId: demoUser._id, title: "Welcome to Higgsfield", message: "Your creative workspace is ready.", type: "info" },
+    { userId: demoUser._id, title: "Welcome to Forge", message: "Your creative workspace is ready.", type: "info" },
     { userId: demoUser._id, title: "Your image generation is ready", message: "\"A futuristic city at night\" finished rendering.", type: "success", link: "/history" },
     { userId: demoUser._id, title: "New model available", message: "Kling 3.0 is now available in Video Studio.", type: "info" },
   ]);
 
   console.log("[seed] done.");
-  console.log("[seed] Demo login -> email: demo@higgsfield.demo  password: password123");
-  console.log("[seed] Admin login -> email: admin@higgsfield.demo password: password123");
+  console.log("[seed] Demo login -> email: demo@forge.demo  password: password123");
+  console.log("[seed] Admin login -> email: admin@forge.demo password: password123");
 
   await mongoose.disconnect();
 }

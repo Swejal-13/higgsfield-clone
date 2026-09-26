@@ -19,7 +19,7 @@ export function ModelCard({ model }: { model: ModelCapability }) {
         <span className="text-xs text-ink-muted uppercase tracking-wide">{model.type}</span>
         <button
           onClick={() => navigate(`/${model.type}?model=${model.id}`)}
-          className="text-xs font-semibold bg-panel-secondary hover:bg-accent hover:text-black px-3 py-1.5 rounded-full transition-colors"
+          className="text-xs font-semibold bg-panel-secondary hover:bg-accent hover:text-white px-3 py-1.5 rounded-full transition-colors"
         >
           Generate
         </button>

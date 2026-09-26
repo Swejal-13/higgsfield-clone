@@ -88,7 +88,7 @@ function IconBtn({ icon: Icon, onClick, active }: { icon: typeof X; onClick: () 
     <button
       onClick={onClick}
       className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors ${
-        active ? "bg-accent text-black" : "bg-white/10 text-white hover:bg-white/20"
+        active ? "bg-accent text-white" : "bg-white/10 text-white hover:bg-white/20"
       }`}
     >
       <Icon size={16} fill={active ? "currentColor" : "none"} />

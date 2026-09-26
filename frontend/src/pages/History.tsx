@@ -70,7 +70,7 @@ function FilterPill({ active, onClick, label }: { active: boolean; onClick: () =
     <button
       onClick={onClick}
       className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
-        active ? "bg-accent text-black border-accent" : "bg-panel text-ink-muted border-border hover:text-ink"
+        active ? "bg-accent text-white border-accent" : "bg-panel text-ink-muted border-border hover:text-ink"
       }`}
     >
       {label}

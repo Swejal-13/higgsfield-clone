@@ -112,7 +112,7 @@ function ActionBtn({
       onClick={onClick}
       title={title}
       className={`w-7 h-7 rounded-full flex items-center justify-center backdrop-blur-sm transition-colors ${
-        active ? "bg-accent text-black" : "bg-black/50 text-white hover:bg-black/70"
+        active ? "bg-accent text-white" : "bg-black/50 text-white hover:bg-black/70"
       }`}
     >
       <Icon size={13} fill={active ? "currentColor" : "none"} />

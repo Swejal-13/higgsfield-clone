@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { listProjects, createProject, getProject, updateProject, deleteProject } from "../controllers/projects.controller";
-import { requireAuth } from "../middleware/auth";
+import { optionalDemoAuth } from "../middleware/demoAuth";
 
 const router = Router();
-router.use(requireAuth);
+router.use(optionalDemoAuth);
 router.get("/", listProjects);
 router.post("/", createProject);
 router.get("/:id", getProject);

@@ -169,7 +169,7 @@ export default function ImageEdit() {
               key={t.id}
               onClick={() => setTool(t.id)}
               className={`text-[11px] font-medium rounded-lg px-2 py-2 border transition-colors ${
-                tool === t.id ? "bg-accent text-black border-accent" : "bg-panel text-ink-muted border-border hover:text-ink"
+                tool === t.id ? "bg-accent text-white border-accent" : "bg-panel text-ink-muted border-border hover:text-ink"
               }`}
             >
               {t.label}

@@ -26,7 +26,7 @@ export default function Effects() {
             key={c}
             onClick={() => setCategory(c)}
             className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium border transition-colors ${
-              category === c ? "bg-accent text-black border-accent" : "bg-panel text-ink-muted border-border hover:text-ink"
+              category === c ? "bg-accent text-white border-accent" : "bg-panel text-ink-muted border-border hover:text-ink"
             }`}
           >
             {c}

@@ -20,7 +20,7 @@ const NODE_TYPES = [
 let idCounter = 7;
 
 const initialNodes: Node[] = [
-  { id: "1", position: { x: 40, y: 120 }, data: { label: "Prompt" }, style: nodeStyle("#DFFF00") },
+  { id: "1", position: { x: 40, y: 120 }, data: { label: "Prompt" }, style: nodeStyle("#B03A2E") },
   { id: "2", position: { x: 280, y: 120 }, data: { label: "Image Generation" }, style: nodeStyle("#60a5fa") },
   { id: "3", position: { x: 520, y: 120 }, data: { label: "Image" }, style: nodeStyle("#34d399") },
   { id: "4", position: { x: 760, y: 120 }, data: { label: "Video Generation" }, style: nodeStyle("#60a5fa") },
@@ -64,7 +64,7 @@ export default function Canvas() {
         id,
         position: { x: 200 + Math.random() * 400, y: 250 + Math.random() * 200 },
         data: { label },
-        style: nodeStyle("#DFFF00"),
+        style: nodeStyle("#B03A2E"),
       },
     ]);
   }
@@ -94,7 +94,7 @@ export default function Canvas() {
           </button>
         ))}
         <div className="flex-1" />
-        <button onClick={save} className="shrink-0 flex items-center gap-1.5 text-xs font-medium bg-accent text-black rounded-full px-3 py-1.5">
+        <button onClick={save} className="shrink-0 flex items-center gap-1.5 text-xs font-medium bg-accent text-white rounded-full px-3 py-1.5">
           <Save size={12} /> Save
         </button>
         <button onClick={clearCanvas} className="shrink-0 flex items-center gap-1.5 text-xs font-medium bg-panel border border-border rounded-full px-3 py-1.5 text-red-400">
@@ -113,7 +113,7 @@ export default function Canvas() {
         >
           <Background variant={BackgroundVariant.Dots} color="#26292c" gap={20} />
           <Controls />
-          <MiniMap style={{ background: "#151719" }} maskColor="rgba(9,10,11,0.7)" nodeColor="#DFFF00" />
+          <MiniMap style={{ background: "#F3EEE2" }} maskColor="rgba(246,243,236,0.7)" nodeColor="#B03A2E" />
         </ReactFlow>
       </div>
     </div>

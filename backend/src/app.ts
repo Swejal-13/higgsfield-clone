@@ -35,7 +35,7 @@ app.use(morgan(env.nodeEnv === "development" ? "dev" : "combined"));
 app.use("/demo", express.static(path.join(__dirname, "..", "public", "demo")));
 app.use("/uploads", express.static(path.join(__dirname, "..", "public", "uploads")));
 
-app.get("/api/health", (_req, res) => res.json({ success: true, message: "Higgsfield API is running", env: env.nodeEnv }));
+app.get("/api/health", (_req, res) => res.json({ success: true, message: "Forge API is running", env: env.nodeEnv }));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/images", imageRoutes);

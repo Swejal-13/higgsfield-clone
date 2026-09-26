@@ -33,7 +33,7 @@ export default function Landing() {
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
             className="text-base sm:text-lg text-ink-muted mt-5 max-w-xl mx-auto"
           >
-            Higgsfield turns a single prompt into cinematic images and video — powered by best-in-class
+            Forge turns a single prompt into cinematic images and video — powered by best-in-class
             models, cinematic camera controls, and a full creative workspace.
           </motion.p>
           <motion.div

@@ -48,8 +48,8 @@ export default function Pricing() {
         <p className="text-sm text-ink-muted mt-2">Start free. Upgrade anytime as your creative output grows.</p>
 
         <div className="inline-flex items-center bg-panel border border-border rounded-full p-1 mt-6">
-          <button onClick={() => setYearly(false)} className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${!yearly ? "bg-accent text-black" : "text-ink-muted"}`}>Monthly</button>
-          <button onClick={() => setYearly(true)} className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${yearly ? "bg-accent text-black" : "text-ink-muted"}`}>Yearly <span className="text-[10px] opacity-70">(save 22%)</span></button>
+          <button onClick={() => setYearly(false)} className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${!yearly ? "bg-accent text-white" : "text-ink-muted"}`}>Monthly</button>
+          <button onClick={() => setYearly(true)} className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${yearly ? "bg-accent text-white" : "text-ink-muted"}`}>Yearly <span className="text-[10px] opacity-70">(save 22%)</span></button>
         </div>
       </div>
 
@@ -60,7 +60,7 @@ export default function Pricing() {
           return (
             <div
               key={p.id}
-              className={`rounded-2xl border bg-panel p-6 flex flex-col relative ${p.popular ? "border-accent shadow-glow" : "border-border"}`}
+              className={`rounded-2xl border bg-panel p-6 flex flex-col relative ${p.popular ? "border-accent shadow-lifted" : "border-border"}`}
             >
               {p.popular && <span className="absolute -top-3 left-1/2 -translate-x-1/2 badge badge-top">Most popular</span>}
               <p className="text-sm font-semibold text-ink-muted uppercase tracking-wide">{p.name}</p>

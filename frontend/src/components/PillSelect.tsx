@@ -16,7 +16,7 @@ export function PillSelect<T extends string>({ label, options, value, onChange }
             onClick={() => onChange(opt.value)}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
               value === opt.value
-                ? "bg-accent text-black border-accent"
+                ? "bg-accent text-white border-accent"
                 : "bg-panel text-ink-muted border-border hover:text-ink hover:border-accent/30"
             }`}
           >

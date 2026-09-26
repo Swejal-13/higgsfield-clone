@@ -3,7 +3,7 @@ import { MessageSquare, Check, Image as ImageIcon, Film, Wand2 } from "lucide-re
 import { useToast } from "@/contexts/ToastContext";
 
 const FEATURES = [
-  { icon: Wand2, label: "Generate", desc: "Trigger Higgsfield generations from a ChatGPT conversation." },
+  { icon: Wand2, label: "Generate", desc: "Trigger Forge generations from a ChatGPT conversation." },
   { icon: ImageIcon, label: "Create images", desc: "Produce on-brand images without leaving chat." },
   { icon: Film, label: "Create videos", desc: "Turn a described scene into a short video clip." },
   { icon: Wand2, label: "Edit", desc: "Inpaint, upscale or restyle an existing image." },
@@ -18,9 +18,9 @@ export default function ChatGptPlugin() {
       <div className="inline-flex w-12 h-12 rounded-2xl bg-accent/10 items-center justify-center mb-4">
         <MessageSquare size={22} className="text-accent" />
       </div>
-      <h1 className="text-3xl font-extrabold">Higgsfield ChatGPT Plugin</h1>
+      <h1 className="text-3xl font-extrabold">Forge ChatGPT Plugin</h1>
       <p className="text-sm text-ink-muted mt-3 max-w-md mx-auto">
-        Bring Higgsfield's image and video generation directly into your ChatGPT conversations.
+        Bring Forge's image and video generation directly into your ChatGPT conversations.
       </p>
       <button
         onClick={() => { setConnected(true); toast("Connected to ChatGPT (demo)", "success"); }}

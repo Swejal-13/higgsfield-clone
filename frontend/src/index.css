@@ -2,41 +2,99 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* Theme tokens — driven by data-theme, set by PreferencesContext from the
+   Settings > Appearance choice (Light / Dark / System) and persisted to
+   localStorage. Every component already uses the bg/panel/border/ink/accent
+   Tailwind tokens, so swapping these variables re-themes the whole app. */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+  --c-bg: #f6f3ec;
+  --c-bg-secondary: #ede7d9;
+  --c-panel: #ffffff;
+  --c-panel-secondary: #f3eee2;
+  --c-border: rgba(28, 26, 22, 0.12);
+  --c-ink: #1c1a16;
+  --c-ink-muted: #79705f;
+  --c-accent-rgb: 176 58 46;
+  --c-accent-dim-rgb: 138 46 36;
+}
+
+[data-theme="dark"] {
   color-scheme: dark;
+  --c-bg: #15130e;
+  --c-bg-secondary: #1c1911;
+  --c-panel: #1f1c15;
+  --c-panel-secondary: #29241a;
+  --c-border: rgba(255, 255, 255, 0.1);
+  --c-ink: #f3eee2;
+  --c-ink-muted: #a79c86;
+  --c-accent-rgb: 224 108 90;
+  --c-accent-dim-rgb: 194 82 66;
 }
 
 html, body, #root {
   height: 100%;
 }
 
+/* Compact mode (Settings > Interface) tightens the shared spacing tokens
+   used by cards, inputs and buttons app-wide. */
+[data-density="compact"] .input-field,
+[data-density="compact"] .btn-primary,
+[data-density="compact"] .btn-secondary {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+[data-density="compact"] {
+  font-size: 15px;
+}
+[data-density="compact"] .card-border,
+[data-density="compact"] [class*="rounded-xl"],
+[data-density="compact"] [class*="rounded-2xl"] {
+  --tw-space-y-reverse: 0;
+}
+
+/* Reduced motion (Settings > Interface) — turns off CSS-driven transitions
+   and animations app-wide. Framer Motion components read
+   prefers-reduced-motion separately, so this covers the plain-CSS
+   transition/hover effects used by buttons, cards and menus. */
+[data-motion="reduced"] * {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
 body {
   @apply bg-bg text-ink font-sans antialiased;
-  background-image: radial-gradient(circle at 20% -10%, rgba(223,255,0,0.06), transparent 40%);
+}
+
+h1, h2, h3, .font-display {
+  font-family: "Source Serif 4", Georgia, serif;
 }
 
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #26292c; border-radius: 8px; }
-::-webkit-scrollbar-thumb:hover { background: #34383c; }
+::-webkit-scrollbar-thumb { background: #D8D0BF; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #C7BDA8; }
 
-.card-border { border: 1px solid rgba(255,255,255,0.08); }
+.card-border { border: 1px solid rgba(28,26,22,0.12); }
 
 .btn-primary {
-  @apply bg-accent text-black font-semibold rounded-full px-5 py-2.5 transition-all hover:brightness-95 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed;
+  @apply bg-accent text-white font-semibold rounded-lg px-5 py-2.5 transition-all hover:bg-accent-dim active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed;
 }
 .btn-secondary {
-  @apply bg-panel-secondary text-ink font-medium rounded-full px-5 py-2.5 border border-border transition-all hover:bg-[#242729] active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed;
+  @apply bg-panel text-ink font-medium rounded-lg px-5 py-2.5 border border-border transition-all hover:bg-panel-secondary active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed;
 }
 .btn-ghost {
   @apply text-ink-muted hover:text-ink transition-colors;
 }
 .input-field {
-  @apply w-full bg-panel border border-border rounded-xl px-4 py-2.5 text-sm text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/50 transition-all;
+  @apply w-full bg-panel border border-border rounded-lg px-4 py-2.5 text-sm text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent/50 transition-all;
 }
 .badge {
   @apply text-[10px] font-bold tracking-wide px-1.5 py-0.5 rounded uppercase;
 }
 .badge-top { @apply bg-accent/15 text-accent; }
-.badge-new { @apply bg-blue-500/15 text-blue-400; }
-.badge-free { @apply bg-emerald-500/15 text-emerald-400; }
+.badge-new { @apply bg-blue-600/10 text-blue-700; }
+.badge-free { @apply bg-emerald-600/10 text-emerald-700; }

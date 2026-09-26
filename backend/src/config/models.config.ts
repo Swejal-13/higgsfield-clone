@@ -13,8 +13,8 @@ export interface ModelCapability {
 }
 
 export const IMAGE_MODELS: ModelCapability[] = [
-  { id: "higgsfield-soul-2", name: "Higgsfield Soul 2.0", type: "image", description: "Flagship photoreal model with cinematic detail.", badge: "TOP", credits: 8, icon: "Sparkles", capabilities: ["text-to-image", "reference", "upscale"], enabled: true },
-  { id: "higgsfield-soul-cinema", name: "Higgsfield Soul Cinema", type: "image", description: "Cinematic look with camera-aware composition.", badge: "NEW", credits: 10, icon: "Clapperboard", capabilities: ["text-to-image", "camera-control"], enabled: true },
+  { id: "forge-soul-2", name: "Forge Soul 2.0", type: "image", description: "Flagship photoreal model with cinematic detail.", badge: "TOP", credits: 8, icon: "Sparkles", capabilities: ["text-to-image", "reference", "upscale"], enabled: true },
+  { id: "forge-soul-cinema", name: "Forge Soul Cinema", type: "image", description: "Cinematic look with camera-aware composition.", badge: "NEW", credits: 10, icon: "Clapperboard", capabilities: ["text-to-image", "camera-control"], enabled: true },
   { id: "gpt-image", name: "GPT Image", type: "image", description: "Versatile general purpose image model.", credits: 6, icon: "Bot", capabilities: ["text-to-image", "edit"], enabled: true },
   { id: "seedream", name: "Seedream", type: "image", description: "Vivid, stylized image generation.", credits: 6, icon: "Flower2", capabilities: ["text-to-image"], enabled: true },
   { id: "nano-banana-pro", name: "Nano Banana Pro", type: "image", description: "Fast iteration model for quick concepts.", badge: "FREE", credits: 0, icon: "Zap", capabilities: ["text-to-image"], enabled: true },
@@ -23,7 +23,7 @@ export const IMAGE_MODELS: ModelCapability[] = [
 
 export const VIDEO_MODELS: ModelCapability[] = [
   { id: "seedance-2-5", name: "Seedance 2.5", type: "video", description: "Cinematic text/image-to-video generation.", badge: "TOP", credits: 24, icon: "Film", capabilities: ["text-to-video", "image-to-video"], enabled: true },
-  { id: "higgsfield-genjutsu", name: "Higgsfield Genjutsu", type: "video", description: "One upload in, endless new visions out.", badge: "NEW", credits: 20, icon: "Wand2", capabilities: ["video-to-video", "style-transfer"], enabled: true },
+  { id: "forge-genjutsu", name: "Forge Genjutsu", type: "video", description: "One upload in, endless new visions out.", badge: "NEW", credits: 20, icon: "Wand2", capabilities: ["video-to-video", "style-transfer"], enabled: true },
   { id: "gemini-omni-flash", name: "Gemini Omni Flash", type: "video", description: "Fast multi-modal video generation.", credits: 16, icon: "Bolt", capabilities: ["text-to-video"], enabled: true },
   { id: "kling-3", name: "Kling 3.0", type: "video", description: "High fidelity motion and physics.", badge: "TOP", credits: 28, icon: "Waves", capabilities: ["text-to-video", "image-to-video"], enabled: true },
   { id: "kling-motion-control", name: "Kling Motion Control", type: "video", description: "Drive a character with a reference motion clip.", credits: 30, icon: "PersonStanding", capabilities: ["motion-control"], enabled: true },
@@ -33,9 +33,9 @@ export const VIDEO_MODELS: ModelCapability[] = [
 ];
 
 export const AUDIO_MODELS: ModelCapability[] = [
-  { id: "higgsfield-voice", name: "Higgsfield Voice", type: "audio", description: "Natural text to speech.", credits: 5, icon: "Mic", capabilities: ["tts"], enabled: true },
-  { id: "higgsfield-sfx", name: "Higgsfield SFX", type: "audio", description: "Sound effect generation.", credits: 4, icon: "AudioWaveform", capabilities: ["sfx"], enabled: true },
-  { id: "higgsfield-music", name: "Higgsfield Music", type: "audio", description: "Original music generation.", badge: "NEW", credits: 10, icon: "Music", capabilities: ["music"], enabled: true },
+  { id: "forge-voice", name: "Forge Voice", type: "audio", description: "Natural text to speech.", credits: 5, icon: "Mic", capabilities: ["tts"], enabled: true },
+  { id: "forge-sfx", name: "Forge SFX", type: "audio", description: "Sound effect generation.", credits: 4, icon: "AudioWaveform", capabilities: ["sfx"], enabled: true },
+  { id: "forge-music", name: "Forge Music", type: "audio", description: "Original music generation.", badge: "NEW", credits: 10, icon: "Music", capabilities: ["music"], enabled: true },
 ];
 
 export const ALL_MODELS: ModelCapability[] = [...IMAGE_MODELS, ...VIDEO_MODELS, ...AUDIO_MODELS];

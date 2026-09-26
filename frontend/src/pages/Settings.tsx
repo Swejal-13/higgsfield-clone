@@ -1,28 +1,43 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { User as UserIcon, Shield, CreditCard, Coins, Bell, Key } from "lucide-react";
+import {
+  User as UserIcon,
+  Shield,
+  CreditCard,
+  Coins,
+  Bell,
+  Key,
+  Palette,
+  SlidersHorizontal,
+  Sparkles,
+  Database,
+} from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/contexts/ToastContext";
+import { usePreferences } from "@/contexts/PreferencesContext";
 import { apiErrorMessage } from "@/api/client";
 import { updateProfileRequest, changePasswordRequest, listApiKeysRequest, createApiKeyRequest, revokeApiKeyRequest } from "@/api/settings";
 import { fetchCreditTransactions } from "@/api/credits";
 import { formatRelativeTime } from "@/utils/format";
+import { clearLocalWorkspaceState, clearPreferences } from "@/utils/preferences";
+import type { ThemePref, GenerationTypePref } from "@/utils/preferences";
 
 const TABS = [
+  { id: "appearance", label: "Appearance", icon: Palette },
+  { id: "interface", label: "Interface", icon: SlidersHorizontal },
+  { id: "generation", label: "Generation", icon: Sparkles },
+  { id: "notifications", label: "Notifications", icon: Bell },
   { id: "profile", label: "Profile", icon: UserIcon },
   { id: "subscription", label: "Subscription", icon: CreditCard },
   { id: "credits", label: "Credits", icon: Coins },
   { id: "api-keys", label: "API Keys", icon: Key },
-  { id: "notifications", label: "Notifications", icon: Bell },
   { id: "security", label: "Security", icon: Shield },
+  { id: "data", label: "Data", icon: Database },
 ] as const;
 
 export default function Settings() {
-  const [tab, setTab] = useState<(typeof TABS)[number]["id"]>("profile");
-  const { user, setUser } = useAuth();
-  const { toast } = useToast();
-
-  if (!user) return null;
+  const [tab, setTab] = useState<(typeof TABS)[number]["id"]>("appearance");
+  const { user } = useAuth();
 
   return (
     <div className="max-w-[900px] mx-auto px-4 lg:px-6 py-10 grid md:grid-cols-[200px_1fr] gap-8">
@@ -32,7 +47,7 @@ export default function Settings() {
             key={t.id}
             onClick={() => setTab(t.id)}
             className={`w-full flex items-center gap-2 text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-              tab === t.id ? "bg-accent text-black font-semibold" : "text-ink-muted hover:text-ink hover:bg-panel-secondary"
+              tab === t.id ? "bg-accent text-white font-semibold" : "text-ink-muted hover:text-ink hover:bg-panel-secondary"
             }`}
           >
             <t.icon size={14} /> {t.label}
@@ -41,14 +56,155 @@ export default function Settings() {
       </nav>
 
       <div>
-        {tab === "profile" && <ProfileTab />}
-        {tab === "subscription" && <SubscriptionTab />}
-        {tab === "credits" && <CreditsTab />}
-        {tab === "api-keys" && <ApiKeysTab />}
+        {tab === "appearance" && <AppearanceTab />}
+        {tab === "interface" && <InterfaceTab />}
+        {tab === "generation" && <GenerationTab />}
         {tab === "notifications" && <NotificationsTab />}
-        {tab === "security" && <SecurityTab />}
+        {tab === "profile" && (user ? <ProfileTab /> : <SignedOutNotice what="your profile" />)}
+        {tab === "subscription" && (user ? <SubscriptionTab /> : <SignedOutNotice what="subscription details" />)}
+        {tab === "credits" && (user ? <CreditsTab /> : <SignedOutNotice what="credit history" />)}
+        {tab === "api-keys" && (user ? <ApiKeysTab /> : <SignedOutNotice what="API keys" />)}
+        {tab === "security" && (user ? <SecurityTab /> : <SignedOutNotice what="password & security" />)}
+        {tab === "data" && <DataTab />}
       </div>
     </div>
+  );
+}
+
+/** Shown for account-bound tabs when browsing as a guest — the app is fully
+ *  usable without an account, but a handful of settings (profile, billing,
+ *  API keys) genuinely require one to have anything to show. */
+function SignedOutNotice({ what }: { what: string }) {
+  return (
+    <Section title="Sign in required">
+      <div className="rounded-xl border border-dashed border-border p-6 text-sm text-ink-muted">
+        You're browsing as a guest, so there's no account to show {what} for. Everything else on this
+        page — appearance, interface, generation defaults and notifications — applies right away and is
+        saved on this device.
+      </div>
+    </Section>
+  );
+}
+
+function AppearanceTab() {
+  const { preferences, setPreference } = usePreferences();
+  const options: { value: ThemePref; label: string }[] = [
+    { value: "light", label: "Light" },
+    { value: "dark", label: "Dark" },
+    { value: "system", label: "System" },
+  ];
+  return (
+    <Section title="Appearance">
+      <p className="text-xs font-medium text-ink-muted uppercase tracking-wide mb-2">Theme</p>
+      <div className="flex gap-2">
+        {options.map((o) => (
+          <button
+            key={o.value}
+            onClick={() => setPreference("theme", o.value)}
+            className={`px-4 py-2 rounded-lg text-sm border transition-colors ${
+              preferences.theme === o.value
+                ? "bg-accent text-white border-accent font-semibold"
+                : "border-border text-ink hover:bg-panel-secondary"
+            }`}
+          >
+            {o.label}
+          </button>
+        ))}
+      </div>
+      <p className="text-xs text-ink-muted mt-3">
+        Applies instantly and is remembered on this device. "System" follows your OS setting.
+      </p>
+    </Section>
+  );
+}
+
+function InterfaceTab() {
+  const { preferences, setPreference } = usePreferences();
+  return (
+    <Section title="Interface">
+      <Toggle
+        label="Compact mode"
+        description="Tightens spacing on cards, buttons and inputs across the app."
+        checked={preferences.compactMode}
+        onChange={(v) => setPreference("compactMode", v)}
+      />
+      <Toggle
+        label="Reduce motion"
+        description="Turns off transitions and hover animation throughout the interface."
+        checked={preferences.reducedMotion}
+        onChange={(v) => setPreference("reducedMotion", v)}
+      />
+    </Section>
+  );
+}
+
+function GenerationTab() {
+  const { preferences, setPreference } = usePreferences();
+  const types: { value: GenerationTypePref; label: string }[] = [
+    { value: "image", label: "Image" },
+    { value: "video", label: "Video" },
+    { value: "audio", label: "Audio" },
+  ];
+  const aspectRatios = ["1:1", "16:9", "9:16", "4:3", "3:4"];
+  const qualities = ["Standard", "High"];
+
+  return (
+    <Section title="Generation defaults">
+      <p className="text-xs text-ink-muted mb-5">
+        Used to pre-fill new Image and Video studio sessions. You can still change any option per generation.
+      </p>
+
+      <p className="text-xs font-medium text-ink-muted uppercase tracking-wide mb-2">Default creation type</p>
+      <div className="flex gap-2 mb-5">
+        {types.map((t) => (
+          <button
+            key={t.value}
+            onClick={() => setPreference("defaultGenerationType", t.value)}
+            className={`px-3 py-1.5 rounded-lg text-xs border transition-colors ${
+              preferences.defaultGenerationType === t.value
+                ? "bg-accent text-white border-accent font-semibold"
+                : "border-border text-ink hover:bg-panel-secondary"
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      <p className="text-xs font-medium text-ink-muted uppercase tracking-wide mb-2">Default aspect ratio</p>
+      <div className="flex flex-wrap gap-2 mb-5">
+        {aspectRatios.map((ar) => (
+          <button
+            key={ar}
+            onClick={() => setPreference("defaultAspectRatio", ar)}
+            className={`px-3 py-1.5 rounded-lg text-xs border transition-colors ${
+              preferences.defaultAspectRatio === ar
+                ? "bg-accent text-white border-accent font-semibold"
+                : "border-border text-ink hover:bg-panel-secondary"
+            }`}
+          >
+            {ar}
+          </button>
+        ))}
+      </div>
+
+      <p className="text-xs font-medium text-ink-muted uppercase tracking-wide mb-2">Default quality</p>
+      <div className="flex gap-2">
+        {qualities.map((q) => (
+          <button
+            key={q}
+            onClick={() => setPreference("defaultQuality", q)}
+            className={`px-3 py-1.5 rounded-lg text-xs border transition-colors ${
+              preferences.defaultQuality === q
+                ? "bg-accent text-white border-accent font-semibold"
+                : "border-border text-ink hover:bg-panel-secondary"
+            }`}
+          >
+            {q}
+          </button>
+        ))}
+      </div>
+    </Section>
   );
 }
 
@@ -74,7 +230,7 @@ function ProfileTab() {
   return (
     <Section title="Profile">
       <div className="flex items-center gap-4 mb-6">
-        <div className="w-16 h-16 rounded-full bg-accent text-black font-bold text-2xl flex items-center justify-center">
+        <div className="w-16 h-16 rounded-full bg-accent text-white font-bold text-2xl flex items-center justify-center">
           {user!.name.charAt(0).toUpperCase()}
         </div>
         <div>
@@ -171,12 +327,21 @@ function ApiKeysTab() {
 }
 
 function NotificationsTab() {
-  const [emailOn, setEmailOn] = useState(true);
-  const [productOn, setProductOn] = useState(false);
+  const { preferences, setPreference } = usePreferences();
   return (
     <Section title="Notifications">
-      <Toggle label="Email me when a generation completes" checked={emailOn} onChange={setEmailOn} />
-      <Toggle label="Product updates & announcements" checked={productOn} onChange={setProductOn} />
+      <Toggle
+        label="Notify me when a generation completes"
+        description="Shows an in-app notification and adds it to your activity feed."
+        checked={preferences.notifyOnComplete}
+        onChange={(v) => setPreference("notifyOnComplete", v)}
+      />
+      <Toggle
+        label="Product updates & announcements"
+        checked={preferences.notifyProductUpdates}
+        onChange={(v) => setPreference("notifyProductUpdates", v)}
+      />
+      <p className="text-xs text-ink-muted mt-3">Saved on this device and remembered across sessions.</p>
     </Section>
   );
 }
@@ -213,6 +378,53 @@ function SecurityTab() {
   );
 }
 
+function DataTab() {
+  const { toast } = useToast();
+  const { resetPreferences } = usePreferences();
+
+  function handleClearPreferences() {
+    clearPreferences();
+    resetPreferences();
+    toast("Preferences reset to defaults", "info");
+  }
+
+  function handleClearWorkspaceState() {
+    clearLocalWorkspaceState();
+    toast("Local workspace state cleared", "info");
+  }
+
+  return (
+    <Section title="Data">
+      <div className="space-y-3">
+        <DataAction
+          title="Clear local preferences"
+          description="Resets theme, interface and generation defaults back to their defaults on this device."
+          actionLabel="Clear preferences"
+          onClick={handleClearPreferences}
+        />
+        <DataAction
+          title="Clear recent workspace state"
+          description="Clears your saved Canvas graph and recent prompt history stored on this device."
+          actionLabel="Clear workspace state"
+          onClick={handleClearWorkspaceState}
+        />
+      </div>
+    </Section>
+  );
+}
+
+function DataAction({ title, description, actionLabel, onClick }: { title: string; description: string; actionLabel: string; onClick: () => void }) {
+  return (
+    <div className="rounded-xl border border-border p-4 flex items-center justify-between gap-4">
+      <div>
+        <p className="text-sm font-semibold">{title}</p>
+        <p className="text-xs text-ink-muted mt-0.5">{description}</p>
+      </div>
+      <button onClick={onClick} className="btn-secondary text-xs !py-1.5 !px-3 whitespace-nowrap">{actionLabel}</button>
+    </div>
+  );
+}
+
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
@@ -222,16 +434,19 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-function Toggle({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
+function Toggle({ label, description, checked, onChange }: { label: string; description?: string; checked: boolean; onChange: (v: boolean) => void }) {
   return (
-    <div className="flex items-center justify-between py-2.5 border-b border-border last:border-0">
-      <span className="text-sm text-ink">{label}</span>
+    <div className="flex items-center justify-between py-2.5 border-b border-border last:border-0 gap-4">
+      <div>
+        <span className="text-sm text-ink block">{label}</span>
+        {description && <span className="text-xs text-ink-muted">{description}</span>}
+      </div>
       <button
         onClick={() => onChange(!checked)}
-        className={`w-10 h-5.5 rounded-full transition-colors relative ${checked ? "bg-accent" : "bg-panel-secondary"}`}
+        className={`shrink-0 rounded-full transition-colors relative ${checked ? "bg-accent" : "bg-panel-secondary"}`}
         style={{ height: 22, width: 40 }}
       >
-        <span className={`absolute top-0.5 w-4.5 h-4.5 rounded-full bg-white transition-transform ${checked ? "translate-x-[19px]" : "translate-x-0.5"}`} style={{ width: 18, height: 18 }} />
+        <span className={`absolute top-0.5 rounded-full bg-white transition-transform ${checked ? "translate-x-[19px]" : "translate-x-0.5"}`} style={{ width: 18, height: 18 }} />
       </button>
     </div>
   );

@@ -22,7 +22,7 @@ export function GenerationRow({ generation }: { generation: Generation }) {
 
   return (
     <Link
-      to={`/history?open=${generation._id}`}
+      to={`/library?open=${generation._id}`}
       className="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-panel-secondary transition-colors border border-transparent hover:border-border"
     >
       <div className="w-14 h-14 rounded-lg bg-panel-secondary overflow-hidden shrink-0 flex items-center justify-center">

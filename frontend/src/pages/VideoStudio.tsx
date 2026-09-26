@@ -19,6 +19,8 @@ import { ImageViewer } from "@/components/ImageViewer";
 import { InsufficientCreditsModal } from "@/components/InsufficientCreditsModal";
 import { EmptyState } from "@/components/EmptyState";
 import { Asset } from "@/types";
+import { usePreferences } from "@/contexts/PreferencesContext";
+import { addRecentPrompt } from "@/utils/preferences";
 
 const DURATIONS = ["5", "8", "10", "15", "30"] as const;
 const ASPECT_RATIOS = ["16:9", "9:16", "1:1", "4:3"] as const;
@@ -31,6 +33,7 @@ export default function VideoStudio() {
   const [params] = useSearchParams();
   const { user, refreshUser } = useAuth();
   const { toast } = useToast();
+  const { preferences } = usePreferences();
 
   const { data: models = [], isError: modelsErrored } = useQuery({ queryKey: ["video-models"], queryFn: () => fetchModels("video") });
   const { data: effects = [] } = useQuery({ queryKey: ["all-effects-vid"], queryFn: () => fetchEffects() });
@@ -38,9 +41,14 @@ export default function VideoStudio() {
   const [prompt, setPrompt] = useState("");
   const [modelId, setModelId] = useState(params.get("model") || "seedance-2-5");
   const [duration, setDuration] = useState<(typeof DURATIONS)[number]>("5");
-  const [aspectRatio, setAspectRatio] = useState<(typeof ASPECT_RATIOS)[number]>("16:9");
+  // Seeded from Settings > Generation defaults; still fully user-editable per generation.
+  const [aspectRatio, setAspectRatio] = useState<(typeof ASPECT_RATIOS)[number]>(
+    () => (ASPECT_RATIOS as readonly string[]).includes(preferences.defaultAspectRatio) ? (preferences.defaultAspectRatio as (typeof ASPECT_RATIOS)[number]) : "16:9"
+  );
   const [resolution, setResolution] = useState<(typeof RESOLUTIONS)[number]>("1K");
-  const [quality, setQuality] = useState<(typeof QUALITIES)[number]>("Standard");
+  const [quality, setQuality] = useState<(typeof QUALITIES)[number]>(
+    () => (QUALITIES as readonly string[]).includes(preferences.defaultQuality) ? (preferences.defaultQuality as (typeof QUALITIES)[number]) : "Standard"
+  );
   const [motion, setMotion] = useState<(typeof MOTIONS)[number]>("Medium");
   const [camera, setCamera] = useState<(typeof CAMERAS)[number]>("Static");
   const [audioOn, setAudioOn] = useState(true);
@@ -105,6 +113,7 @@ export default function VideoStudio() {
 
     setSubmitting(true);
     try {
+      if (prompt.trim()) addRecentPrompt(prompt);
       const gen = await createGeneration({
         type: "video",
         action: hasReference ? "image-to-video" : "generate",

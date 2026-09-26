@@ -34,7 +34,7 @@ export default function Share() {
           <img src={mediaUrl(data.url)} alt={data.filename} className="w-full" />
         )}
       </div>
-      <p className="text-xs text-ink-muted mt-4">Shared from Higgsfield</p>
+      <p className="text-xs text-ink-muted mt-4">Shared from Forge</p>
     </div>
   );
 }

@@ -1,23 +1,34 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       colors: {
-        bg: { DEFAULT: "#090A0B", secondary: "#0D0F10" },
-        panel: { DEFAULT: "#151719", secondary: "#1C1F22" },
-        border: { DEFAULT: "rgba(255,255,255,0.08)" },
-        ink: { DEFAULT: "#FFFFFF", muted: "#A0A4AA" },
-        accent: { DEFAULT: "#DFFF00", dim: "#B8D600" },
+        bg: "rgb(var(--c-bg) / <alpha-value>)",
+        "bg-secondary": "rgb(var(--c-bg-secondary) / <alpha-value>)",
+        panel: "rgb(var(--c-panel) / <alpha-value>)",
+        "panel-secondary": "rgb(var(--c-panel-secondary) / <alpha-value>)",
+        border: "rgb(var(--c-border) / <alpha-value>)",
+        ink: "rgb(var(--c-ink) / <alpha-value>)",
+        "ink-muted": "rgb(var(--c-ink-muted) / <alpha-value>)",
+        accent: "rgb(var(--c-accent-rgb) / <alpha-value>)",
+        "accent-dim": "rgb(var(--c-accent-dim-rgb) / <alpha-value>)",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-      },
-      borderRadius: {
-        card: "16px",
-      },
-      boxShadow: {
-        glow: "0 0 40px rgba(223,255,0,0.15)",
+        sans: [
+          "Inter",
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif",
+        ],
+        display: [
+          "Source Serif 4",
+          "Georgia",
+          "serif",
+        ],
       },
     },
   },

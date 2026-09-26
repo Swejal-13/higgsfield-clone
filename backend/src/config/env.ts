@@ -4,7 +4,7 @@ dotenv.config();
 export const env = {
   port: parseInt(process.env.PORT || "5000", 10),
   nodeEnv: process.env.NODE_ENV || "development",
-  mongoUri: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/higgsfield",
+  mongoUri: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/forge",
   jwtSecret: process.env.JWT_SECRET || "dev-secret-not-for-production",
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || "7d",
   clientUrl: process.env.CLIENT_URL || "http://localhost:5173",

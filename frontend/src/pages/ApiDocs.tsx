@@ -45,7 +45,7 @@ export default function ApiDocs() {
             key={s}
             onClick={() => setActive(s)}
             className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-              active === s ? "bg-accent text-black font-semibold" : "text-ink-muted hover:text-ink hover:bg-panel-secondary"
+              active === s ? "bg-accent text-white font-semibold" : "text-ink-muted hover:text-ink hover:bg-panel-secondary"
             }`}
           >
             {s}
@@ -54,7 +54,7 @@ export default function ApiDocs() {
       </nav>
 
       <div>
-        <h1 className="text-2xl font-bold flex items-center gap-2 mb-1"><Code2 size={20} className="text-accent" /> Higgsfield API</h1>
+        <h1 className="text-2xl font-bold flex items-center gap-2 mb-1"><Code2 size={20} className="text-accent" /> Forge API</h1>
         <p className="text-sm text-ink-muted mb-6">Build image and video generation directly into your own product.</p>
 
         {active === "API Keys" ? (
@@ -107,7 +107,7 @@ export default function ApiDocs() {
 }
 
 const DOC_CONTENT: Record<string, string> = {
-  Overview: "The Higgsfield API gives programmatic access to image, video and audio generation using the same models and mock pipeline that power the web app.",
+  Overview: "The Forge API gives programmatic access to image, video and audio generation using the same models and mock pipeline that power the web app.",
   Authentication: "Authenticate requests with a Bearer token: `Authorization: Bearer <your_api_key>`. Generate a key from the API Keys tab.",
   Models: "GET /api/models — returns every enabled image, video and audio model with pricing and capabilities.",
   "Image API": "POST /api/images/generate — { prompt, model, settings } → { generation }. Also available: /edit, /inpaint, /upscale, /variation.",

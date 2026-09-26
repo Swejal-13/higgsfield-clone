@@ -35,7 +35,7 @@ export function PromoBanner() {
     <div className="bg-gradient-to-r from-[#151719] via-[#1b1e15] to-[#151719] border-b border-border">
       <div className="max-w-[1440px] mx-auto px-4 py-2.5 flex items-center justify-center gap-3 text-sm relative">
         <span className="text-ink">
-          Get <span className="text-accent font-bold">54% OFF</span> Higgsfield Pro — offer expires in{" "}
+          Get <span className="text-accent font-bold">54% OFF</span> Forge Pro — offer expires in{" "}
           <span className="font-mono text-accent">{pad(time.h)}:{pad(time.m)}:{pad(time.s)}</span>
         </span>
         <Link to="/pricing" className="text-accent font-semibold underline underline-offset-2 hover:no-underline">

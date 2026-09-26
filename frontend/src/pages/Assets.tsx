@@ -51,8 +51,8 @@ export default function Assets() {
             <Upload size={13} /> Upload
           </button>
           <div className="flex items-center bg-panel border border-border rounded-lg overflow-hidden">
-            <button onClick={() => setView("grid")} className={`p-1.5 ${view === "grid" ? "bg-accent text-black" : "text-ink-muted"}`}><LayoutGrid size={14} /></button>
-            <button onClick={() => setView("list")} className={`p-1.5 ${view === "list" ? "bg-accent text-black" : "text-ink-muted"}`}><List size={14} /></button>
+            <button onClick={() => setView("grid")} className={`p-1.5 ${view === "grid" ? "bg-accent text-white" : "text-ink-muted"}`}><LayoutGrid size={14} /></button>
+            <button onClick={() => setView("list")} className={`p-1.5 ${view === "list" ? "bg-accent text-white" : "text-ink-muted"}`}><List size={14} /></button>
           </div>
         </div>
       </div>
@@ -63,7 +63,7 @@ export default function Assets() {
             key={t}
             onClick={() => setTab(t)}
             className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium border transition-colors ${
-              tab === t ? "bg-accent text-black border-accent" : "bg-panel text-ink-muted border-border hover:text-ink"
+              tab === t ? "bg-accent text-white border-accent" : "bg-panel text-ink-muted border-border hover:text-ink"
             }`}
           >
             {t}
